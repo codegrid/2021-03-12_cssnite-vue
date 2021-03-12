@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Animation</title>
+<style>
+.SwitchButton {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.SwitchButton__Input {
+  position: absolute;
+  opacity: 0;
+}
+
+.SwitchButton__View::before,
+.SwitchButton__View::after {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  content: "";
+  width: 32px;
+  height: 32px;
+  background-size: 100% 100%;
+  transition: all .3s;
+}
+
+.SwitchButton__View::before {
+  background-image: url( "./off.svg" );
+}
+
+.SwitchButton__View::after {
+  opacity: 0;
+  background-image: url( "./on.svg" );
+}
+
+.SwitchButton__Input:checked ~ .SwitchButton__View::before,
+.SwitchButton__Input:checked ~ .SwitchButton__View::after {
+  transform: translateX( 60px ) rotate( 360deg );
+}
+
+.SwitchButton__Input:checked ~ .SwitchButton__View::before {
+  opacity: 0;
+}
+
+.SwitchButton__Input:checked ~ .SwitchButton__View::after {
+  opacity: 1;
+}
+
+.SwitchButton__View {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #00bee6;
+  border-radius: 50px;
+  background: #00bee6;
+  transition: all .3s;
+  box-shadow: inset 0 0 10px #00acda;
+}
+
+.SwitchButton__Input:checked ~ .SwitchButton__View {
+  border-color: #ff9900;
+  background: #ff9900;
+  box-shadow: inset 0 0 10px #ee7600;
+}
+</style>
+</head>
+<body>
+
+<div id="MyAppRoot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
+<script>
+var SwitchButton = Vue.extend( {
+  template: `
+    <label class="SwitchButton">
+      <input class="SwitchButton__Input" type="checkbox" :checked="checked">
+      <span class="SwitchButton__View"></span>
+    </label>
+  `,
+
+  props: {
+    checked: Boolean,
+  }
+} );
+
+var componentRoot = new Vue( {
+  template: `
+    <div>
+      <p>
+        <SwitchButton :checked="true" />
+        誕生日を表示
+      </p>
+
+      <p>
+        <SwitchButton :checked="true" />
+        通知を受け取る
+      </p>
+
+      <p>
+        <SwitchButton :checked="false" />
+        動画を自動再生する
+      </p>
+    </div>
+  `,
+
+  components: {
+    SwitchButton,
+  },
+
+} );
+
+componentRoot.$mount( '#MyAppRoot' );
+</script>
+
+</body>
+</html>

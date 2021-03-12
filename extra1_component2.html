@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Animation</title>
+<link rel="stylesheet" href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css">
+</head>
+<body>
+
+<div id="MyAppRoot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
+<script>
+var ProductCard = Vue.extend( {
+  template: `
+    <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10">
+      <div class="px-4 py-2">
+        <h1 class="text-gray-900 font-bold text-3xl uppercase">
+          {{ title }}
+        </h1>
+        <p class="text-gray-600 text-sm mt-1">
+          {{ text }}
+        </p>
+      </div>
+      <img
+        class="h-56 w-full object-cover mt-2"
+        :src="imageUrl"
+        alt=""
+      >
+      <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
+        <h1 class="text-gray-200 font-bold text-xl">
+          {{ price }}円
+        </h1>
+        <button
+          class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded"
+          type="button"
+        >
+          Add to card
+        </button>
+      </div>
+    </div>
+  `,
+
+  props: {
+    title: String,
+    text: String,
+    imageUrl: String,
+    price: String,
+  }
+} );
+
+
+var componentRoot = new Vue( {
+
+  template: `
+    <div class="flex gap-3 px-4 bg-gray-100">
+      <ProductCard
+        title="サラダ"
+        text="フレッシュなサラダ"
+        imageUrl="./img_02.jpg"
+        price="800"
+      />
+
+      <ProductCard
+        title="ピザ"
+        text="あつあつのピザ"
+        imageUrl="./img_03.jpg"
+        price="1200"
+      />
+    </div>
+  `,
+
+  components: {
+    ProductCard,
+  },
+
+} );
+
+componentRoot.$mount( '#MyAppRoot' );
+</script>
+
+</body>
+</html>
